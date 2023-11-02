@@ -1,0 +1,15 @@
+WITH objects(name, id)
+     AS (SELECT 'uspGetBillOfMaterials', 23671132 UNION ALL
+         SELECT 'uspPrintError', 37575172) SELECT 'Using Id and Name',
+       sys.databases.name,
+       objects.name
+FROM   sys.databases,
+       objects
+WHERE  OBJECT_NAME(id, database_id) = objects.name
+UNION ALL
+SELECT 'Using Name (assumes default schema)',
+       sys.databases.name,
+       objects.name
+FROM   sys.databases,
+       objects
+WHERE  OBJECT_ID(databases.name + '..uspGetBillOfMaterials', 'P') IS NOT NULL 
